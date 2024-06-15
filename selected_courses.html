@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Courses</title>
+</head>
+<body>
+    <h1>My Selected Courses</h1>
+    <ul id="courseList"></ul>
+
+    <script>
+        async function fetchSelectedCourses() {
+            try {
+                const response = await fetch('/my-courses');
+                if (response.ok) {
+                    const courses = await response.json();
+                    const courseList = document.getElementById('courseList');
+                    courseList.innerHTML = '';
+                    courses.forEach(course => {
+                        const li = document.createElement('li');
+                        li.textContent = course.CourseName;
+                        courseList.appendChild(li);
+                    });
+                } else {
+                    alert('Failed to fetch courses');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        fetchSelectedCourses();
+    </script>
+</body>
+</html>

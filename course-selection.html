@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Courses</title>
+</head>
+<body>
+    <h1>Select Your Courses</h1>
+    <form id="courseSelectionForm">
+        <!-- Replace with dynamically loaded courses -->
+        <div>
+            <input type="checkbox" id="course1" name="courses" value="1">
+            <label for="course1">Scratch</label>
+        </div>
+        <div>
+            <input type="checkbox" id="course2" name="courses" value="2">
+            <label for="course2">MS-Office</label>
+        </div>
+        <div>
+            <input type="checkbox" id="course1" name="courses" value="1">
+            <label for="course1">Computer Hardware</label>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('courseSelectionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const courseIDs = [...formData.getAll('courses')];
+
+            try {
+                const response = await fetch('/select-courses', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ courseIDs })
+                });
+
+                if (response.ok) {
+                    alert('Courses selected successfully');
+                } else {
+                    alert('Failed to select courses');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
